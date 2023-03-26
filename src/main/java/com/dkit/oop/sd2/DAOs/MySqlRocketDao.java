@@ -59,7 +59,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
             }
         } catch (SQLException e)
         {
-            throw new DaoException("findAllUseresultSet() " + e.getMessage());
+            throw new DaoException("findAllRockets() " + e.getMessage());
         } finally
         {
             try
@@ -95,7 +95,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         {
             connection = this.getConnection();
 
-            String query = "SELECT * FROM ROCKETs WHERE ROCKET_ID = ?";
+            String query = "SELECT * FROM ROCKETS WHERE ROCKET_ID = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, rocket_id);
 
@@ -111,7 +111,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
             }
         } catch (SQLException e)
         {
-            throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+            throw new DaoException("findRocketsByRocketID() " + e.getMessage());
         } finally
         {
             try
@@ -134,6 +134,47 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
             }
         }
         return rockets;     // reference to User object, or null value
+    }
+    @Override
+    public void deleteRocketByRocketID(int rocket_id) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "DELETE FROM ROCKETS WHERE ROCKET_ID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, rocket_id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e)
+        {
+            throw new DaoException("deleteRocketByRocketID() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+            }
+        }
     }
 }
 

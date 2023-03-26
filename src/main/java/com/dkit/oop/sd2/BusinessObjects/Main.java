@@ -30,6 +30,11 @@ public class Main {
             }else{
                 System.out.println("Rocket_ID" + rocket_id + "is not valid");
             }
+
+            System.out.println("\nCall: deleteRocketByRocketID()");
+            rocket_id = 1;
+            IRocketDao.deleteRocketByRocketID(rocket_id);
+            System.out.println("Rocket with id: " + rocket_id + "deleted successfully");
         }catch ( DaoException e ){
             e.printStackTrace();
         }

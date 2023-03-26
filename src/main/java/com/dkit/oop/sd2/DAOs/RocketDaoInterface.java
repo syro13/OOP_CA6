@@ -9,4 +9,5 @@ public interface RocketDaoInterface {
     public List<Rockets> findAllRockets() throws DaoException;
 
     public Rockets findRocketsByRocketID(int rocket_id) throws DaoException;
+    public void deleteRocketByRocketID(int rocket_id) throws DaoException;
 }
