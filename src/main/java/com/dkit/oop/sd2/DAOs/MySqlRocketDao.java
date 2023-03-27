@@ -176,6 +176,54 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
             }
         }
     }
+
+    @Override
+    public void insertRocket(String rocket_name, String manufacturer, String date, int payload_capacity) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "INSERT INTO rockets (rocket_name, manufacturer, first_flight, payload_capacity)\n" +
+                    "VALUES\n" +
+                    "  (" +
+                    "?, ?, ?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, rocket_name);
+            preparedStatement.setString(2, manufacturer);
+            preparedStatement.setString(3, date);
+            preparedStatement.setInt(4, payload_capacity);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e)
+        {
+            throw new DaoException("deleteRocketByRocketID() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+            }
+        }
+    }
 }
 
 

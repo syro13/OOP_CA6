@@ -13,6 +13,12 @@ public class Rockets {
         this.date = date;
         this.payload_capacity = payload_capacity;
     }
+    public Rockets(String rocket_name, String manufacturer, String date, int payload_capacity){
+        this.rocket_name = rocket_name;
+        this.manufacturer = manufacturer;
+        this.date = date;
+        this.payload_capacity = payload_capacity;
+    }
     public Rockets(){
         this.rocket_id = 0;
         this.rocket_name = "Starship";

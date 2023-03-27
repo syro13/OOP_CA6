@@ -10,4 +10,5 @@ public interface RocketDaoInterface {
 
     public Rockets findRocketsByRocketID(int rocket_id) throws DaoException;
     public void deleteRocketByRocketID(int rocket_id) throws DaoException;
+    public void insertRocket(String rocket_name, String manufacturer, String date, int payload_capacity) throws DaoException;
 }
