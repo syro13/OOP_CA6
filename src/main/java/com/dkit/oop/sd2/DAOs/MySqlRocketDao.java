@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -224,6 +225,47 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
             }
         }
     }
+    @Override
+    public List<Rockets> findPlayersUsingFilter(Comparator<Rockets> filter) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Rockets> list = new ArrayList<>();
+
+        try
+        {
+            list = findAllRockets();
+            for(int i = 0; i < list.size()-1;i++){
+                filter.compare(list.get(i++),list.get(i++));
+            }
+        } catch (SQLException e)
+        {
+            throw new DaoException("deleteRocketByRocketID() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+            }
+        }
+        return list;
+    }
+
 }
 
 

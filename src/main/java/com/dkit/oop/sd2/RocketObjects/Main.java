@@ -1,9 +1,10 @@
-package com.dkit.oop.sd2.BusinessObjects;
+package com.dkit.oop.sd2.RocketObjects;
 
 import com.dkit.oop.sd2.DAOs.MySqlRocketDao;
 import com.dkit.oop.sd2.DAOs.RocketDaoInterface;
 import com.dkit.oop.sd2.DTOs.Rockets;
 import com.dkit.oop.sd2.Exceptions.DaoException;
+import com.dkit.oop.sd2.Filters.SortByCapacity;
 
 import java.util.List;
 import java.util.Scanner;
@@ -38,6 +39,8 @@ public class Main {
                         insertRocket();
                         break;
                     case 5:
+                        filters();
+                    case 6:
                         appOn = false;
                         break;
                 }
@@ -46,6 +49,23 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    private static void filters() throws DaoException {
+        SortByCapacity filter = new SortByCapacity();
+        kb.nextLine();
+        System.out.println("""
+                1 - Sort By Capacity
+                """);
+        List<Rockets> rockets = IRocketDao.findPlayersUsingFilter(filter);
+        if( rockets.isEmpty() ){
+            System.out.println("There are no Rockets");
+        }else{
+            for(Rockets rocket : rockets){
+                System.out.println("Rockets" + rocket.toString());
+            }
+        }
+    }
+
     private static void insertRocket() throws DaoException {
         kb.nextLine();
         System.out.print("Name: ");
