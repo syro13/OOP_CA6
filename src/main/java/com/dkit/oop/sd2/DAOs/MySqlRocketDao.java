@@ -19,6 +19,7 @@ package com.dkit.oop.sd2.DAOs;
 import com.dkit.oop.sd2.DTOs.Rockets;
 import com.dkit.oop.sd2.Exceptions.DaoException;
 import com.dkit.oop.sd2.Filters.SortByCapacity;
+import com.dkit.oop.sd2.RocketObjects.IdCache;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,24 +95,36 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Rockets rockets = null;
+        List<Rockets> testList = null;
+        IdCache cache = new IdCache();
         try
         {
+
             connection = this.getConnection();
-
-            String query = "SELECT * FROM ROCKETS WHERE ROCKET_ID = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, rocket_id);
-
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next())
-            {
-                int rocketID = resultSet.getInt("ROCKET_ID");
-                String rocket_name = resultSet.getString("ROCKET_NAME");
-                String manufacturer = resultSet.getString("MANUFACTURER");
-                String first_flight = resultSet.getString("FIRST_FLIGHT");
-                int payload_capacity = resultSet.getInt("PAYLOAD_CAPACITY");
-                rockets = new Rockets(rocketID, rocket_name, manufacturer, first_flight, payload_capacity);
+            testList= findAllRockets();
+            for (Rockets rocket: testList) {
+                cache.add(rocket.getRocket_id());
             }
+            if(cache.contains(rocket_id)){
+                String query = "SELECT * FROM ROCKETS WHERE ROCKET_ID = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, rocket_id);
+
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next())
+                {
+                    int rocketID = resultSet.getInt("ROCKET_ID");
+                    String rocket_name = resultSet.getString("ROCKET_NAME");
+                    String manufacturer = resultSet.getString("MANUFACTURER");
+                    String first_flight = resultSet.getString("FIRST_FLIGHT");
+                    int payload_capacity = resultSet.getInt("PAYLOAD_CAPACITY");
+                    rockets = new Rockets(rocketID, rocket_name, manufacturer, first_flight, payload_capacity);
+                }
+            }else{
+                System.out.println("ID selected does not exist in database");
+            }
+
         } catch (SQLException e)
         {
             throw new DaoException("findRocketsByRocketID() " + e.getMessage());
