@@ -18,6 +18,8 @@ package com.dkit.oop.sd2.DAOs;
 
 import com.dkit.oop.sd2.DTOs.Rockets;
 import com.dkit.oop.sd2.Exceptions.DaoException;
+import com.dkit.oop.sd2.Filters.SortByCapacity;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -236,9 +238,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         try
         {
             list = findAllRockets();
-            for(int i = 0; i < list.size()-1;i++){
-                filter.compare(list.get(i++),list.get(i++));
-            }
+            list.sort(new SortByCapacity());
         } catch (SQLException e)
         {
             throw new DaoException("deleteRocketByRocketID() " + e.getMessage());
