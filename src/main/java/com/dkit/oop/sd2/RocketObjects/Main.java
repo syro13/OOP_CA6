@@ -29,30 +29,14 @@ public class Main {
                         """);
                 int choice = kb.nextInt();
                 switch (choice) {
-                    case 1:
-                        findAll();
-                        break;
-                    case 2:
-                        findByID();
-                        break;
-                    case 3:
-                        deleteByID();
-                        break;
-                    case 4:
-                        insertRocket();
-                        break;
-                    case 5:
-                        filters();
-                        break;
-                    case 6:
-                        findAllJson();
-                        break;
-                    case 7:
-                        findByIDJson();
-                        break;
-                    case 8:
-                        appOn = false;
-                        break;
+                    case 1 -> findAll();
+                    case 2 -> findByID();
+                    case 3 -> deleteByID();
+                    case 4 -> insertRocket();
+                    case 5 -> filters();
+                    case 6 -> findAllJson();
+                    case 7 -> findByIDJson();
+                    case 8 -> appOn = false;
                 }
             }
         }catch ( DaoException e ){
@@ -108,12 +92,10 @@ public class Main {
 
     private static void findByID() throws DaoException {
         System.out.println("\nCall: findRocketsByID()");
-        int rocket_id = 1;
+        int rocket_id = 15;
         Rockets rockets1 = IRocketDao.findRocketsByRocketID(rocket_id);
         if(rockets1 != null){
             System.out.println("Rocket with id: " + rocket_id + " was found: " + rockets1);
-        }else{
-            System.out.println("Rocket_ID" + rocket_id + "is not valid");
         }
     }
 
