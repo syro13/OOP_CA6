@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import com.google.gson.Gson;
 
 
 public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
@@ -266,6 +267,24 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         return list;
     }
 
+    public void findAllPlayerJson() throws DaoException {
+        Gson gsonParser = new Gson();
+
+        List<Rockets> rocketsList = findAllRockets();
+
+        String gsonString = gsonParser.toJson(rocketsList);
+
+        System.out.println(gsonString);
+    }
+    public void findRocketsByIdJson(int id) throws DaoException{
+        Gson gsonParser = new Gson();
+
+        Rockets rocket = findRocketsByRocketID(id);
+
+        String gsonString = gsonParser.toJson(rocket);
+
+        System.out.println(gsonString);
+    }
 }
 
 

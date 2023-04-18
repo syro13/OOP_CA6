@@ -13,4 +13,7 @@ public interface RocketDaoInterface {
     void deleteRocketByRocketID(int rocket_id) throws DaoException;
     void insertRocket(String rocket_name, String manufacturer, String date, int payload_capacity) throws DaoException;
     List<Rockets> findPlayersUsingFilter(Comparator<Rockets> filter) throws DaoException;
+
+    void findAllPlayerJson() throws DaoException;
+    void findRocketsByIdJson(int id) throws DaoException;
 }

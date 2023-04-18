@@ -22,7 +22,10 @@ public class Main {
                         2 - Display Rocket By ID
                         3 - Delete Rocket By ID
                         4 - Insert Rocket
-                        5 - Exit
+                        5 - Filter Rockets
+                        6 - Display All Rockets (Json)
+                        7 - Display Rocket By ID (Json)
+                        8 - Exit
                         """);
                 int choice = kb.nextInt();
                 switch (choice) {
@@ -40,7 +43,14 @@ public class Main {
                         break;
                     case 5:
                         filters();
+                        break;
                     case 6:
+                        findAllJson();
+                        break;
+                    case 7:
+                        findByIDJson();
+                        break;
+                    case 8:
                         appOn = false;
                         break;
                 }
@@ -48,6 +58,16 @@ public class Main {
         }catch ( DaoException e ){
             e.printStackTrace();
         }
+    }
+
+    private static void findByIDJson() throws DaoException {
+        System.out.print("Enter Rocket ID: ");
+        int choice  = kb.nextInt();
+        IRocketDao.findRocketsByIdJson(choice);
+    }
+
+    private static void findAllJson() throws DaoException {
+        IRocketDao.findAllPlayerJson();
     }
 
     private static void filters() throws DaoException {
