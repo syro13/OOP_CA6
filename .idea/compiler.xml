@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="DataAccessLayer" />
-        <module name="OOP_CA6" />
       </profile>
     </annotationProcessing>
   </component>
