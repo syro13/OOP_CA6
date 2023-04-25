@@ -51,7 +51,7 @@ public class Main {
     }
 
     private static void findAllJson() throws DaoException {
-        IRocketDao.findAllPlayerJson();
+        IRocketDao.findAllRocketsJson();
     }
 
     private static void filters() throws DaoException {
@@ -60,7 +60,7 @@ public class Main {
         System.out.println("""
                 1 - Sort By Capacity
                 """);
-        List<Rockets> rockets = IRocketDao.findPlayersUsingFilter(filter);
+        List<Rockets> rockets = IRocketDao.findRocketsUsingFilter(filter);
         if( rockets.isEmpty() ){
             System.out.println("There are no Rockets");
         }else{

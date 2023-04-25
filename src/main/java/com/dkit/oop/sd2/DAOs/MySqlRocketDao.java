@@ -242,7 +242,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         }
     }
     @Override
-    public List<Rockets> findPlayersUsingFilter(Comparator<Rockets> filter) throws DaoException
+    public List<Rockets> findRocketsUsingFilter(Comparator<Rockets> filter) throws DaoException
     {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -280,7 +280,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         return list;
     }
 
-    public void findAllPlayerJson() throws DaoException {
+    public void findAllRocketsJson() throws DaoException {
         Gson gsonParser = new Gson();
 
         List<Rockets> rocketsList = findAllRockets();
