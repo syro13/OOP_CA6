@@ -41,7 +41,14 @@ public class Client {
                 System.out.println("Enter Rocket ID: ");
                 command = command + " " + in.nextLine();
             } else if (command.startsWith("3")) {
-                System.out.println("Insert here");
+                System.out.print("Name: ");
+                command = command + " " + in.nextLine() + ",";
+                System.out.print("Manufacturer: ");
+                command = command + " " + in.nextLine() + ",";
+                System.out.print("First Flight: ");
+                command = command + " " + in.nextLine() + ",";
+                System.out.print("Payload Capacity: ");
+                command = command + " " + in.nextLine() + ",";
             } else if (command.startsWith("4")) {
 
                 System.out.println("Enter Rocket ID: ");
@@ -72,7 +79,7 @@ public class Client {
                     System.out.println(rocket.toString());
                 }
             } else if (command.startsWith("3")) {
-                System.out.println("insert temp");
+                System.out.println("Success!!");
 
             } else if (command.startsWith("4")) {
                 boolean isDeleted = inStream.nextBoolean();

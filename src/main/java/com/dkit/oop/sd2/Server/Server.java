@@ -52,7 +52,12 @@ public class Server {
                     System.out.println("1" + gsonString);
                     out.print(gsonString);
                 } else if (command.startsWith("3")) {
-                    System.out.println("Insert Temp");
+                    String[] details = command.substring(1).split(",");
+                    String name = details[0].substring(1);
+                    String manufacturer = details[1].substring(1);
+                    String date = details[2].substring(1);
+                    int payloadCapacity= Integer.parseInt(details[3].substring(1));
+                    IRocketDao.insertRocket(name,manufacturer,date,payloadCapacity);
                 } else if (command.startsWith("4")) {
                     IRocketDao.deleteRocketByRocketID(Integer.parseInt(command.substring(2)));
                     String gsonString = IRocketDao.findRocketsByIdJson(Integer.parseInt(command.substring(2)));
