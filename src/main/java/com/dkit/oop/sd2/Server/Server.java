@@ -51,8 +51,13 @@ public class Server {
                     String gsonString = IRocketDao.findAllRocketsJson();
                     System.out.println("1" + gsonString);
                     out.print(gsonString);
-                }
-                else
+                } else if (command.startsWith("3")) {
+                    System.out.println("Insert Temp");
+                } else if (command.startsWith("4")) {
+                    IRocketDao.deleteRocketByRocketID(Integer.parseInt(command.substring(2)));
+                    String gsonString = IRocketDao.findRocketsByIdJson(Integer.parseInt(command.substring(2)));
+                    out.print(gsonString != null);
+                } else
                 {
                     out.print("I'm sorry i don't understand :(\n");
                 }
