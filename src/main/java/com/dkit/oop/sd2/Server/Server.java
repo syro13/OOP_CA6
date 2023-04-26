@@ -13,7 +13,10 @@ import com.dkit.oop.sd2.DAOs.RocketDaoInterface;
 import com.dkit.oop.sd2.DTOs.Rockets;
 import com.dkit.oop.sd2.Exceptions.DaoException;
 import com.dkit.oop.sd2.Filters.SortByCapacity;
+import com.google.gson.JsonObject;
+
 public class Server {
+    public static RocketDaoInterface IRocketDao = new MySqlRocketDao();
     public static void main(String[] args)
     {
         Server server = new Server();
@@ -30,24 +33,24 @@ public class Server {
             {
                 Socket socket = ss.accept();  // wait for client to connect, and open a socket with the client
 
+                Scanner in = new Scanner(socket.getInputStream());
                 System.out.println("Server Message: A Client has connected.");
 
-                Scanner in = new Scanner(socket.getInputStream());
                 String command = in.nextLine();
-
                 System.out.println("Server message: Received from client : \"" + command + "\"");
 
                 OutputStream os = socket.getOutputStream();
                 PrintWriter out = new PrintWriter(os, true);
-                if(command.startsWith("Time"))
+                if(command.startsWith("1"))
                 {
-                    LocalTime time =  LocalTime.now();
-                    out.print(time);
+                    String gsonString = IRocketDao.findRocketsByIdJson(Integer.parseInt(command.substring(2)));
+                    out.print(gsonString);
                 }
-                else if(command.startsWith("Echo"))
+                else if(command.startsWith("2"))
                 {
-                    command = command.substring(5); // strip off the 'Echo ' part
-                    out.print( command+"\n");
+                    String gsonString = IRocketDao.findAllRocketsJson();
+                    System.out.println("1" + gsonString);
+                    out.print(gsonString);
                 }
                 else
                 {
@@ -58,6 +61,8 @@ public class Server {
             }
         } catch (IOException e) {
             System.out.println("Server Message: IOException: " + e);
+        } catch (DaoException e) {
+            e.printStackTrace();
         }
     }
 }

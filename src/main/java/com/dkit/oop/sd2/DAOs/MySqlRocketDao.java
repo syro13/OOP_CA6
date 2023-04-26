@@ -280,23 +280,23 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         return list;
     }
 
-    public void findAllRocketsJson() throws DaoException {
+    public String findAllRocketsJson() throws DaoException {
         Gson gsonParser = new Gson();
 
         List<Rockets> rocketsList = findAllRockets();
 
         String gsonString = gsonParser.toJson(rocketsList);
 
-        System.out.println(gsonString);
+        return gsonString;
     }
-    public void findRocketsByIdJson(int id) throws DaoException{
+    public String findRocketsByIdJson(int id) throws DaoException{
         Gson gsonParser = new Gson();
 
         Rockets rocket = findRocketsByRocketID(id);
 
         String gsonString = gsonParser.toJson(rocket);
 
-        System.out.println(gsonString);
+        return gsonString;
     }
 }
 

@@ -47,11 +47,11 @@ public class Main {
     private static void findByIDJson() throws DaoException {
         System.out.print("Enter Rocket ID: ");
         int choice  = kb.nextInt();
-        IRocketDao.findRocketsByIdJson(choice);
+        System.out.println(IRocketDao.findRocketsByIdJson(choice));
     }
 
     private static void findAllJson() throws DaoException {
-        IRocketDao.findAllRocketsJson();
+        System.out.println(IRocketDao.findAllRocketsJson());
     }
 
     private static void filters() throws DaoException {

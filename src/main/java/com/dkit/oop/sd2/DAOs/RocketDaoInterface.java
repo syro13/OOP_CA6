@@ -14,6 +14,6 @@ public interface RocketDaoInterface {
     void insertRocket(String rocket_name, String manufacturer, String date, int payload_capacity) throws DaoException;
     List<Rockets> findRocketsUsingFilter(Comparator<Rockets> filter) throws DaoException;
 
-    void findAllRocketsJson() throws DaoException;
-    void findRocketsByIdJson(int id) throws DaoException;
+    String findAllRocketsJson() throws DaoException;
+    String findRocketsByIdJson(int id) throws DaoException;
 }
