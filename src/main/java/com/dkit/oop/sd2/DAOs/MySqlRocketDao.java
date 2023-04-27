@@ -293,7 +293,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         Gson gsonParser = new Gson();
 
         Rockets rocket = findRocketsByRocketID(id);
-
+        if(rocket == null) return null;
         String gsonString = gsonParser.toJson(rocket);
 
         return gsonString;
