@@ -260,7 +260,7 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         try
         {
             list = findAllRockets();
-            list.sort(new SortByCapacity());
+            list.sort(filter);
         } catch (SQLException e)
         {
             throw new DaoException("deleteRocketByRocketID() " + e.getMessage());

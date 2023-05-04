@@ -4,6 +4,7 @@ import com.dkit.oop.sd2.DAOs.MySqlRocketDao;
 import com.dkit.oop.sd2.DAOs.RocketDaoInterface;
 import com.dkit.oop.sd2.DTOs.Rockets;
 import com.dkit.oop.sd2.Exceptions.DaoException;
+import com.dkit.oop.sd2.Filters.FilterByCapacity;
 import com.dkit.oop.sd2.Filters.SortByCapacity;
 
 import java.util.List;
@@ -56,11 +57,23 @@ public class App {
 
     private static void filters() throws DaoException {
         SortByCapacity filter = new SortByCapacity();
+        List<Rockets> rockets;
         kb.nextLine();
         System.out.println("""
                 1 - Sort By Capacity
+                2 - Filter by Capacity
                 """);
-        List<Rockets> rockets = IRocketDao.findRocketsUsingFilter(filter);
+        int choice = kb.nextInt();
+        if(choice == 1){
+            rockets = IRocketDao.findRocketsUsingFilter(filter);
+        }else{
+            System.out.println("Enter MIN: ");
+            int min = kb.nextInt();
+            System.out.println("Enter MAX:");
+            int max = kb.nextInt();
+            FilterByCapacity filter1 = new FilterByCapacity(min,max);
+            rockets = IRocketDao.findRocketsUsingFilter(filter1);
+        }
         if( rockets.isEmpty() ){
             System.out.println("There are no Rockets");
         }else{
