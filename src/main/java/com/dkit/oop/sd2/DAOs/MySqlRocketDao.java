@@ -34,6 +34,7 @@ import com.google.gson.Gson;
 public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
 {
 
+    IdCache cache = new IdCache();
     @Override
     public List<Rockets> findAllRockets() throws DaoException
     {
@@ -61,6 +62,9 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
                 int payload_capacity = resultSet.getInt("PAYLOAD_CAPACITY");
                 Rockets r = new Rockets(rocket_id, rocket_name, manufacturer, first_flight, payload_capacity);
                 rocketsList.add(r);
+            }
+            for (Rockets rocket: rocketsList) {
+                cache.add(rocket.getRocket_id());
             }
         } catch (SQLException e)
         {
@@ -97,15 +101,10 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
         ResultSet resultSet = null;
         Rockets rockets = null;
         List<Rockets> testList = null;
-        IdCache cache = new IdCache();
+        findAllRockets();
         try
         {
-
             connection = this.getConnection();
-            testList= findAllRockets();
-            for (Rockets rocket: testList) {
-                cache.add(rocket.getRocket_id());
-            }
             if(cache.contains(rocket_id)){
                 String query = "SELECT * FROM ROCKETS WHERE ROCKET_ID = ?";
                 preparedStatement = connection.prepareStatement(query);
@@ -168,6 +167,9 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
             preparedStatement.setInt(1, rocket_id);
 
             preparedStatement.executeUpdate();
+            if(cache.contains(rocket_id)){
+                cache.remove(rocket_id);
+            }
         } catch (SQLException e)
         {
             throw new DaoException("deleteRocketByRocketID() " + e.getMessage());
@@ -216,6 +218,12 @@ public class MySqlRocketDao extends MySqlDao implements RocketDaoInterface
             preparedStatement.setInt(4, payload_capacity);
 
             preparedStatement.executeUpdate();
+            List<Rockets> rocketsList = findAllRockets();
+            for(Rockets r:rocketsList){
+                if(!cache.contains(r.getRocket_id())){
+                    cache.add(r.getRocket_id());
+                }
+            }
         } catch (SQLException e)
         {
             throw new DaoException("deleteRocketByRocketID() " + e.getMessage());

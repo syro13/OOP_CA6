@@ -46,8 +46,8 @@ public class App {
 
     private static void findByIDJson() throws DaoException {
         System.out.print("Enter Rocket ID: ");
-        int choice  = kb.nextInt();
-        System.out.println(IRocketDao.findRocketsByIdJson(choice));
+        int rocket_id = kb.nextInt();
+        System.out.println(IRocketDao.findRocketsByIdJson(rocket_id));
     }
 
     private static void findAllJson() throws DaoException {
@@ -85,14 +85,16 @@ public class App {
     }
     private static void deleteByID() throws DaoException {
         System.out.println("\nCall: deleteRocketByRocketID()");
-        int rocket_id = 1;
+        System.out.println("Enter Rocket ID: ");
+        int rocket_id = kb.nextInt();
         IRocketDao.deleteRocketByRocketID(rocket_id);
         System.out.println("Rocket with id: " + rocket_id + " deleted successfully");
     }
 
     private static void findByID() throws DaoException {
         System.out.println("\nCall: findRocketsByID()");
-        int rocket_id = 15;
+        System.out.println("Enter Rocket ID: ");
+        int rocket_id = kb.nextInt();
         Rockets rockets1 = IRocketDao.findRocketsByRocketID(rocket_id);
         if(rockets1 != null){
             System.out.println("Rocket with id: " + rocket_id + " was found: " + rockets1);

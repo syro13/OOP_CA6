@@ -99,6 +99,33 @@ public class AppTest {
 
         assertEquals(expected,actual);
     }
+    @Test
+    public void mainFindAllJSON() throws DaoException {
+        List<Rockets> mockList = new ArrayList<>();
+        Rockets rocket1 = new Rockets("Rocket 1", "Manufacturer 1", "2022-01-01", 5000);
+        Rockets rocket2 = new Rockets("Rocket 2", "Manufacturer 2", "2023-01-01", 1000);
+        mockList.add(rocket1);
+        mockList.add(rocket2);
+
+        when(mockRocketDao.findAllRocketsJson()).thenReturn(mockList.toString());
+
+        String actual = mockRocketDao.findAllRocketsJson();
+
+        String expected = "[Rockets{rocket_id=0, rocket_name='Rocket 1', manufacturer='Manufacturer 1', date='2022-01-01', payload_capacity=5000}, Rockets{rocket_id=0, rocket_name='Rocket 2', manufacturer='Manufacturer 2', date='2023-01-01', payload_capacity=1000}]";
+        assertEquals(expected, actual);
+    }
+@Test
+public void testFindArtistByIdJson() throws DaoException {
+    // Create an example Artist object
+    String expected = "Rockets{rocket_id=0, rocket_name='Rocket 1', manufacturer='Manufacturer 1', date='2022-01-01', payload_capacity=5000}";
+    // Mock the DAO's findArtistById() method to return the example Artist object
+    when(mockRocketDao.findRocketsByIdJson(1)).thenReturn(expected);
+
+    // Call the DAO's findArtistByIdJson() method with the ID of the example Artist object
+    String json = mockRocketDao.findRocketsByIdJson(1);
+    // Assert that the deserialized Artist object matches the example Artist object
+    assertEquals(expected,json);
+}
     @After
     public void tearDown() {
         mockRocketDao = null;
