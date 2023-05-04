@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class Main {
+public class App {
     public static RocketDaoInterface IRocketDao = new MySqlRocketDao();
     static Scanner kb = new Scanner(System.in);
     public static void main(String[] args) {
